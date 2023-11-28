@@ -1,10 +1,10 @@
 public class Planet {
     private static final double G = 6.67e-11;
 
-    private double xxPos, yyPos;
-    private double xxVel, yyVel;
-    private double mass;
-    private String imgFileName;
+    public double xxPos, yyPos;
+    public double xxVel, yyVel;
+    public double mass;
+    public String imgFileName;
 
     /**
      * Construct by assigning values.
