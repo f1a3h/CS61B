@@ -88,12 +88,4 @@ public class Planet {
         String imgPath = "images/" + imgFileName;
         StdDraw.picture(xxPos, yyPos, imgPath);
     }
-
-    public static void print(Planet[] planets) {
-        for (int i = 0; i < planets.length; i++) {
-            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
-                          planets[i].xxPos, planets[i].yyPos, planets[i].xxVel,
-                          planets[i].yyVel, planets[i].mass, planets[i].imgFileName);   
-        }
-    }
 }
