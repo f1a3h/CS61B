@@ -1,10 +1,10 @@
 public class Planet {
-    static final double G = 6.67e-11;
+    private static final double G = 6.67e-11;
 
-    double xxPos, yyPos;
-    double xxVel, yyVel;
-    double mass;
-    String imgFileName;
+    private double xxPos, yyPos;
+    private double xxVel, yyVel;
+    private double mass;
+    private String imgFileName;
 
     /**
      * Construct by assigning values.
@@ -87,5 +87,13 @@ public class Planet {
     public void draw() {
         String imgPath = "images/" + imgFileName;
         StdDraw.picture(xxPos, yyPos, imgPath);
+    }
+
+    public static void print(Planet[] planets) {
+        for (int i = 0; i < planets.length; i++) {
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+                          planets[i].xxPos, planets[i].yyPos, planets[i].xxVel,
+                          planets[i].yyVel, planets[i].mass, planets[i].imgFileName);   
+        }
     }
 }
