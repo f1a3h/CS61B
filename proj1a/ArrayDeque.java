@@ -97,9 +97,10 @@ public class ArrayDeque<T> {
             return null;
         }
 
+        T ret = array[front];
         front = plusOne(front, allocatedSize);
         size--;
-        return array[minusOne(front)];
+        return ret;
     }
 
     public T removeLast() {
