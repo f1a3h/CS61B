@@ -1,43 +1,61 @@
 public class LinkedListDeque<T> {
-    public class Node {
-        /**
-         * It is a better approach to use a circular linked list rather than a bidirectional linked list.
-         * However, here is an implementation of a bidirectional linked list.
-         */
-        public T item;
-        public Node next;
-        public Node last;
+    private class Node {
+        private T item;
+        private Node next;
+        private Node prev;
 
-        public Node(T value, Node lastNode, Node nextNode) {
+        public Node(T value, Node prevNode, Node nextNode) {
             item = value;
             next = nextNode;
-            last = lastNode;
+            prev = prevNode;
+        }
+
+        public Node getNext() {
+            return next;
+        }
+
+        public Node getPrev() {
+            return prev;
+        }
+
+        public T getItem() {
+            return item;
+        }
+
+        public void setNext(Node node) {
+            next = node;
+        }
+
+        public void setPrev(Node node) {
+            prev = node;
+        }
+
+        public void setItem(T val) {
+            item = val;
         }
     }
 
-    private Node front;
-    private Node back;
+    private Node sentinel;
     private int size;
 
     public LinkedListDeque() {
-        front = null;
-        back = null;
+        sentinel = new Node(null, null, null);
+        sentinel.setPrev(sentinel);
+        sentinel.setNext(sentinel);
         size = 0;
     }
 
     public void addFirst(T item) {
-        Node node = new Node(item, null, front);
-
-        front = node;
-        if (back == null) back = node;
+        Node node = new Node(item, sentinel, sentinel.getNext());
+        sentinel.getNext().setPrev(node);
+        sentinel.setNext(node);
         size++;
     }
 
     public void addLast(T item) {
-        Node node = new Node(item, back, null);
-
-        back = node;
-        if (front == null) front = node;
+        Node node = new Node(item, sentinel.getPrev(), sentinel);
+        sentinel.getPrev().setNext(node);
+        sentinel.setPrev(node);
         size++;
     }
 
@@ -45,74 +63,66 @@ public class LinkedListDeque<T> {
         return size == 0;
     }
 
+    public int size() {
+        return size;
+    }
+
     public void printDeque() {
-        Node node = front;
-        while (node != null) {
-            System.out.print(node.item + " ");
-            node = node.next;
+        Node node = sentinel.getNext();
+        while (node != null && node != sentinel) {
+            System.out.print(node.getItem() + " ");
+            node = node.getNext();
         }
         System.out.println();
     }
 
     public T removeFirst() {
-        T ret;
-
-        try {
-            ret = front.item;
-            front = front.next;
-            size--;
-            if (isEmpty()) back = null;
-            return ret;
-        } catch (NullPointerException e) {
-            System.out.println("Exception: trying to remove a node from an empty deque!");
+        if (isEmpty()) {
             return null;
         }
+
+        Node node = sentinel.getNext();
+        node.getNext().setPrev(sentinel);
+        sentinel.setNext(node.getNext());
+        size--;
+        return node.getItem();
     }
 
     public T removeLast() {
-        T ret;
-
-        try {
-            ret = back.item;
-            back = back.last;
-            size--;
-            if (isEmpty()) front = null;
-            return ret;
-        } catch (NullPointerException e) {
-            System.out.println("Exception: trying to remove a node from an empty deque!");
+        if (isEmpty()) {
             return null;
         }
+
+        Node node = sentinel.getPrev();
+        node.getPrev().setNext(sentinel);
+        sentinel.setPrev(node.getPrev());
+        size--;
+        return node.getItem();
     }
 
     public T get(int index) {
         if (index >= size) {
-            System.out.println("Exception: the node does not exist!");
             return null;
         }
 
-        Node node = front;
-        for (int i = 0; i < index; ++i) {
-            node = node.next;
+        Node node = sentinel;
+        for (int i = 0; i <= index; ++i) {
+            node = node.getNext();
         }
-        return node.item;
+        return node.getItem();
     }
 
-    public Node getRecursiveHelper(int index, Node node) {
-        if (index == 0) return node;
-        return getRecursiveHelper(index - 1, node.next);
+    public T getRecursiveHelper(int index, Node node) {
+        if (index == 0) {
+            return node.getItem();
+        }
+        return getRecursiveHelper(index - 1, node.getNext());
     }
 
     public T getRecursive(int index) {
         if (index >= size) {
-            System.out.println("Exception: the node does not exist!");
             return null;
         }
-
-        Node node = getRecursiveHelper(index, front);
-        return node.item;
-    }
-
-    public int size() {
-        return size;
+        return getRecursiveHelper(index, sentinel.getNext());
     }
 }
