@@ -93,6 +93,10 @@ public class ArrayDeque<T> {
             shrink();
         }
 
+        if (isEmpty()) {
+            return null;
+        }
+
         front = plusOne(front, allocatedSize);
         size--;
         return array[minusOne(front)];
@@ -101,6 +105,10 @@ public class ArrayDeque<T> {
     public T removeLast() {
         if (allocatedSize >= 20 && allocatedSize / size >= 4) {
             shrink();
+        }
+
+        if (isEmpty()) {
+            return null;
         }
 
         back = minusOne(back);
