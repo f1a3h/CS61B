@@ -119,7 +119,7 @@ public class LinkedListDeque<T> {
         return getRecursiveHelper(index - 1, node.getNext());
     }
 
-    public T getRecursive(int index) {
+    private T getRecursive(int index) {
         if (index >= size) {
             return null;
         }
