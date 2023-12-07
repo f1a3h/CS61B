@@ -10,22 +10,26 @@ public class ArrayDeque<T> {
         allocatedSize = 20;
         front = 1;
         back = 1;
-        array = (T[])new Object[allocatedSize];
+        array = (T[]) new Object[allocatedSize];
     }
 
     private int plusOne(int index, int mod) {
         index %= mod;
-        if (index == mod - 1) return 0;
+        if (index == mod - 1) {
+            return 0;
+        }
         return index + 1;
     }
 
     private int minusOne(int index) {
-        if (index == 0) return allocatedSize - 1;
+        if (index == 0) {
+            return allocatedSize - 1;
+        }
         return index - 1;
     }
 
     private void grow() {
-        T[] newArray = (T[])new Object[allocatedSize << 1];
+        T[] newArray = (T[]) new Object[allocatedSize << 1];
         int p1 = front;
         int p2 = 0;
         while (p1 != back) {
@@ -41,7 +45,7 @@ public class ArrayDeque<T> {
     }
 
     private void shrink() {
-        T[] newArray = (T[])new Object[allocatedSize >> 1];
+        T[] newArray = (T[]) new Object[allocatedSize >> 1];
         int p1 = front;
         int p2 = 0;
         while (p1 != back) {
@@ -65,7 +69,9 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if (size == allocatedSize - 1) grow();
+        if (size == allocatedSize - 1) {
+            grow();
+        }
 
         front = minusOne(front);
         array[front] = item;
@@ -73,7 +79,9 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T item) {
-        if (size == allocatedSize - 1) grow();
+        if (size == allocatedSize - 1) {
+            grow();
+        }
 
         array[back] = item;
         back = plusOne(back, allocatedSize);
@@ -81,7 +89,9 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        if (allocatedSize >= 20 && allocatedSize / size >= 4) shrink();
+        if (allocatedSize >= 20 && allocatedSize / size >= 4) {
+            shrink();
+        }
 
         front = plusOne(front, allocatedSize);
         size--;
@@ -89,7 +99,9 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        if (allocatedSize >= 20 && allocatedSize / size >= 4) shrink();
+        if (allocatedSize >= 20 && allocatedSize / size >= 4) {
+            shrink();
+        }
 
         back = minusOne(back);
         size--;
