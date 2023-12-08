@@ -7,9 +7,9 @@ public class ArrayDeque<T> {
 
     public ArrayDeque() {
         size = 0;
-        allocatedSize = 20;
-        front = 1;
-        back = 1;
+        allocatedSize = 16;
+        front = 8;
+        back = 8;
         array = (T[]) new Object[allocatedSize];
     }
 
@@ -31,33 +31,33 @@ public class ArrayDeque<T> {
     private void grow() {
         T[] newArray = (T[]) new Object[allocatedSize << 1];
         int p1 = front;
-        int p2 = 0;
+        int p2 = allocatedSize;
         while (p1 != back) {
             newArray[p2] = array[p1];
             p2 = plusOne(p2, allocatedSize << 1);
             p1 = plusOne(p1, allocatedSize);
         }
 
-        allocatedSize <<= 1;
-        front = 0;
+        front = allocatedSize;
         back = p2;
         array = newArray;
+        allocatedSize <<= 1;
     }
 
     private void shrink() {
         T[] newArray = (T[]) new Object[allocatedSize >> 1];
         int p1 = front;
-        int p2 = 0;
+        int p2 = allocatedSize >> 2;
         while (p1 != back) {
             newArray[p2] = array[p1];
             p2 = plusOne(p2, allocatedSize >> 1);
             p1 = plusOne(p1, allocatedSize);
         }
 
-        allocatedSize >>= 1;
-        front = 0;
+        front = allocatedSize >> 2;
         back = p2;
         array = newArray;
+        allocatedSize >>= 1;
     }
 
     public boolean isEmpty() {
@@ -89,7 +89,7 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        if (allocatedSize >= 20 && allocatedSize / size >= 4) {
+        if (allocatedSize >= 32 && (allocatedSize >> 2) >= size) {
             shrink();
         }
 
@@ -104,7 +104,7 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        if (allocatedSize >= 20 && allocatedSize / size >= 4) {
+        if (allocatedSize >= 32 && (allocatedSize >> 2) >= size) {
             shrink();
         }
 
