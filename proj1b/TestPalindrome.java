@@ -21,13 +21,13 @@ public class TestPalindrome {
         assertFalse(palindrome.isPalindrome("cat"));
         assertFalse(palindrome.isPalindrome("aabbabba"));
         assertFalse(palindrome.isPalindrome("abbabbab"));
+        assertFalse(palindrome.isPalindrome("Malayalam"));
         /* A non-alphabetic character should be OK. */
         // assertFalse(palindrome.isPalindrome("?"));
 
         assertTrue(palindrome.isPalindrome(""));
         assertTrue(palindrome.isPalindrome("x"));
         assertTrue(palindrome.isPalindrome("rotavator"));
-        assertTrue(palindrome.isPalindrome("Malayalam"));
     }
 
     @Test
