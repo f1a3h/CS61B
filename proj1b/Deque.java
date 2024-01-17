@@ -35,7 +35,8 @@ public interface Deque<T> {
     public T removeLast();
 
     /**
-     * Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null.
+     * Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
+     * If no such item exists, returns null.
      */
     public T get(int index);
 }
