@@ -15,11 +15,8 @@ public class Palindrome {
      * Check if the given Deque<Character> is a palindrome.
      */
     private boolean isPalindromeHelper(Deque<Character> deque) {
-        if (deque.isEmpty()) {
+        if (deque.size() <= 1) {
             return true;
-        }
-        if (deque.size() == 1) {
-            return Character.isAlphabetic(deque.removeFirst());
         }
 
         Character first = deque.removeFirst();
