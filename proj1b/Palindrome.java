@@ -32,7 +32,7 @@ public class Palindrome {
             return true;
         }
 
-        Deque<Character> deque = wordToDeque(word.toLowerCase());
+        Deque<Character> deque = wordToDeque(word);
         return isPalindromeHelper(deque);
     }
 
