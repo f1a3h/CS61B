@@ -22,9 +22,7 @@ public class TTFAF {
         }
 
         // You can also do this:
-        // GuitarPlayer player = new GuitarPlayer(new java.io.File("/Users/flashgo/Downloads/flower.midi"));
-        // GuitarPlayer player = new GuitarPlayer(new java.io.File("/Users/flashgo/Downloads/水月陵 - 恋×シンアイ彼女 メインテーマ.mid"));
-        // GuitarPlayer player = new GuitarPlayer(new java.io.File("/Users/flashgo/Downloads/WonderfulTonight.mid"));
+        // GuitarPlayer player = new GuitarPlayer(new java.io.File("/path/to/your/file.midi"));
         // player.play();
     }
 
