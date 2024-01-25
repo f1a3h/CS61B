@@ -7,8 +7,10 @@ public class Percolation {
     private final int top;
     private final int bottom;
     private int numOpenSites;
+    private boolean percolated;
     private boolean[][] grid;
-    private WeightedQuickUnionUF sites;
+    private WeightedQuickUnionUF conToTop;
+    private WeightedQuickUnionUF conToBot;
 
     /**
      * Transform from 2D to 1D.
@@ -28,7 +30,8 @@ public class Percolation {
             return;
         }
 
-        sites.union(transform(row1, col1), transform(row2, col2));
+        conToTop.union(transform(row1, col1), transform(row2, col2));
+        conToBot.union(transform(row1, col1), transform(row2, col2));
     }
 
     /**
@@ -42,20 +45,22 @@ public class Percolation {
         this.N = N;
         numOpenSites = 0;
         top = N * N;
-        bottom = N * N + 1;
+        bottom = N * N;
+        percolated = false;
         grid = new boolean[N][N];
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
                 grid[i][j] = false;
             }
         }
-        sites = new WeightedQuickUnionUF(N * N + 2);
+        conToTop = new WeightedQuickUnionUF(N * N + 1);
+        conToBot = new WeightedQuickUnionUF(N * N + 1);
 
         for (int j = 0; j < N; ++j) {
-            sites.union(top, transform(0, j));
+            conToTop.union(top, transform(0, j));
         }
         for (int j = 0; j < N; ++j) {
-            sites.union(bottom, transform(N - 1, j));
+            conToBot.union(bottom, transform(N - 1, j));
         }
     }
 
@@ -76,6 +81,12 @@ public class Percolation {
         unionOpenNeighbor(row, col, row + 1, col);
         unionOpenNeighbor(row, col, row, col - 1);
         unionOpenNeighbor(row, col, row, col + 1);
+
+        if (conToTop.connected(top, transform(row, col)) &&
+                conToBot.connected(bottom, transform(row, col))
+        ) {
+            percolated = true;
+        }
     }
 
     /**
@@ -100,7 +111,7 @@ public class Percolation {
         if (!grid[row][col]) {
             return false;
         }
-        return sites.connected(top, transform(row, col));
+        return conToTop.connected(top, transform(row, col));
     }
 
     /**
@@ -114,7 +125,7 @@ public class Percolation {
      * Does the system percolate?
      */
     public boolean percolates() {
-        return sites.connected(top, bottom);
+        return percolated;
     }
 
     /**

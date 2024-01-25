@@ -1,6 +1,5 @@
 package hw2;
 
-import edu.princeton.cs.introcs.StdDraw;
 import edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
 
