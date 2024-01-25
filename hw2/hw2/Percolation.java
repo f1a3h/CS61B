@@ -82,8 +82,8 @@ public class Percolation {
         unionOpenNeighbor(row, col, row, col - 1);
         unionOpenNeighbor(row, col, row, col + 1);
 
-        if (conToTop.connected(top, transform(row, col)) &&
-                conToBot.connected(bottom, transform(row, col))
+        if (conToTop.connected(top, transform(row, col))
+                && conToBot.connected(bottom, transform(row, col))
         ) {
             percolated = true;
         }
